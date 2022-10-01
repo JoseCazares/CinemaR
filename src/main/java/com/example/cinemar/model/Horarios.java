@@ -28,21 +28,21 @@ public class Horarios {
     @Column(name = "horainicio")
     private Time horainicio;
 
-    // @ManyToMany(fetch = FetchType.LAZY,
-    // cascade = CascadeType.ALL)
-    // @JoinTable(
-    // name = "m_pelicula_horarios",
-    // joinColumns = { @JoinColumn(name="id_pelicula")},
-    // inverseJoinColumns = { @JoinColumn(name="id_horario")})
-    // private Set<Pelicula> peliculas = new HashSet<>();
+    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @JoinTable(
+    name = "m_pelicula_horarios",
+    joinColumns = { @JoinColumn(name="id_pelicula")},
+    inverseJoinColumns = { @JoinColumn(name="id_horario")})
+    private Set<Pelicula> peliculas = new HashSet<>();
 
     public Horarios() {
 
     }
 
-    public Horarios(Long id, Time horainicio) {
+    public Horarios(Long id, Time horainicio, Set<Pelicula> peliculas) {
         Id = id;
         this.horainicio = horainicio;
+        this.peliculas = peliculas;
     }
 
     public Long getId() {
@@ -61,4 +61,15 @@ public class Horarios {
         this.horainicio = horainicio;
     }
 
+    public Set<Pelicula> getPeliculas() {
+        return peliculas;
+    }
+
+    public void setPeliculas(Set<Pelicula> peliculas) {
+        this.peliculas = peliculas;
+    }
+
+    
+
+    
 }

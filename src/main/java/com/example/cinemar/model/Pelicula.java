@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "m_pelicula")
 public class Pelicula implements Serializable {
@@ -36,18 +38,27 @@ public class Pelicula implements Serializable {
     private String clasificacion;
 
     // @ManyToMany(fetch = FetchType.LAZY,
-    // cascade = CascadeType.ALL, mappedBy = "peliculas")
-    // private Set<Horarios> horarios = new HashSet<>();
+    // cascade = {
+    //     CascadeType.PERSIST,
+    //     CascadeType.MERGE
+    // },
+    // mappedBy = "peliculas")
+    
+    @ManyToMany(mappedBy = "peliculas")
+    @JsonIgnore
+    private Set<Horarios> horarios = new HashSet<>();
 
     public Pelicula() {
     }
 
-    public Pelicula(Long id, String nombrepelicula, String imagen, String duracion, String clasificacion) {
+    public Pelicula(Long id, String nombrepelicula, String imagen, String duracion, String clasificacion,
+            Set<Horarios> horarios) {
         this.id = id;
         this.nombrepelicula = nombrepelicula;
         this.imagen = imagen;
         this.duracion = duracion;
         this.clasificacion = clasificacion;
+        this.horarios = horarios;
     }
 
     public Long getId() {
@@ -88,6 +99,14 @@ public class Pelicula implements Serializable {
 
     public void setClasificacion(String clasificacion) {
         this.clasificacion = clasificacion;
+    }
+
+    public Set<Horarios> getHorarios() {
+        return horarios;
+    }
+
+    public void setHorarios(Set<Horarios> horarios) {
+        this.horarios = horarios;
     }
 
     
