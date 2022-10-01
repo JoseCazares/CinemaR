@@ -1,4 +1,4 @@
-# Cinemar es un crud para una 
+# Cinemar crud en java
 
 ## Es un sistema backend de servicios REST para un módulo de administración de películas(CRUD) en una cartelera de cine.
 
